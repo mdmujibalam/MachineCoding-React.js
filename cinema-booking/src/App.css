@@ -1,0 +1,71 @@
+.grid-cell {
+  border: 1px solid black;
+  padding: 3px;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.cell {
+  text-align: center;
+  align-items: center;
+}
+
+.grid-row {
+  display: flex;
+  gap: 10px;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.booked {
+  background-color: grey;
+}
+
+.regular {
+  background-color: aquamarine;
+}
+
+.premium {
+  background-color: rgb(240, 137, 4);
+}
+
+.vip {
+  background-color: rgb(219, 165, 145);
+}
+
+.success {
+  background-color: green;
+}
+
+.grid-spacing {
+  margin-right: 100px;
+}
+
+.summary-section {
+  margin: 20px auto;
+  padding-left: 20px;
+}
+
+.book-btn-container {
+  width: 400px;
+  height: 30px;
+  margin: 20px auto;
+}
+
+.book-btn {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  background-color:lightgray;
+  outline:none;
+}
+
+
