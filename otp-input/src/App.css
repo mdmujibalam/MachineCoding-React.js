@@ -1,0 +1,11 @@
+.input-box {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+}
+
+.input-container {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
