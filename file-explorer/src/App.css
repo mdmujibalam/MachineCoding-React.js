@@ -1,0 +1,18 @@
+.main-container {
+  margin-left: 15px;
+}
+
+.isFolder-container {
+  cursor: pointer;
+}
+
+.icon {
+  width: 15px;
+  height: 15px;
+  gap: 5px;
+  margin-left: 5px;
+}
+
+.icon-container > span {
+  cursor: pointer;
+}

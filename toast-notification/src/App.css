@@ -1,0 +1,70 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.toast-item {
+  width: 200px;
+  height: 30px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 5px;
+  align-items: center;
+}
+
+.success {
+  background-color: green;
+}
+
+.error {
+  background-color: red;
+}
+
+.info {
+  background-color: blue;
+}
+
+.warning {
+  background-color: orange;
+}
+
+.cross-btn {
+  cursor: pointer;
+}
+
+.toast-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.top-right {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.top-left {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
+
+.bottom-right {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+.bottom-left {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}

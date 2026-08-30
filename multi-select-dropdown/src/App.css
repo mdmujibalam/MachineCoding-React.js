@@ -1,0 +1,41 @@
+.wrapper-container {
+  width: 400px;
+  margin: 20px auto;
+}
+
+.input-box {
+  width: 100%;
+}
+
+.dropdown-container {
+  margin-top: 3px;
+  width: 100%;
+  border: 1px solid black;
+  height: 100px;
+  overflow-y: scroll;
+}
+
+.dropdown-item {
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.dropdown-item:hover {
+  background-color: cyan;
+}
+
+.selected-container {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.selected-item {
+  border: 1px solid black;
+  background-color: green;
+}
+
+.selected-item span {
+  cursor: pointer;
+}
