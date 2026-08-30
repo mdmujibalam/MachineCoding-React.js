@@ -1,0 +1,39 @@
+.progressBar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.progressBar {
+  width: 400px;
+  border: 1px solid black;
+  border-radius: 15px;
+  position: relative;
+  height: 20px;
+  overflow: hidden;
+}
+
+.progress-text {
+  position: absolute;
+  z-index: 100;
+  color: black;
+  left: 50%;
+}
+
+/* .progress-filled {
+  position: absolute;
+  height: 100%;
+  top: 0px;
+  background-color: green;
+  transition: width 0.5s ease;
+} */
+
+.progress-filled {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  background-color: green;
+  transition: transform 0.5s ease;
+}
