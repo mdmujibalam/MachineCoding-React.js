@@ -16,25 +16,31 @@ const Pagination = () => {
   }
 
   useEffect(() => {
-    fetchProducts("https://dummyjson.com/products?limit=200");
+    //fetchProducts("https://dummyjson.com/products?limit=200");
+     fetch("https://dummyjson.com/products?limit=200")
+     .then((res)=> res.json())
+     .then((data)=> setProductList(data?.products))
+     .catch(err=> console.log("error occurred", err));
   }, []);
-
-  function handleClick(pageNo) {
-    setPageNumber(pageNo);
-  }
-
-  function handleClickPrev() {
-    setPageNumber((prev) => Math.max(1, prev - 1));
-  }
-
-  function handleClickNext() {
-    setPageNumber((prev) => Math.min(totalPages, prev + 1));
-  }
 
   const totalPages = Math.ceil(productsList?.length / PAGE_SIZE);
   const start = (pageNumber - 1) * PAGE_SIZE;
   const end = pageNumber * PAGE_SIZE;
   const paginatedList = productsList?.slice(start, end);
+
+  function goToPage(nextPage) {
+    setPageNumber(Math.max(1, Math.min(totalPages, nextPage)));
+  }
+
+  function handleClickPrev() {
+    setPageNumber((currentPage) => Math.max(1, currentPage - 1));
+  }
+
+  function handleClickNext() {
+    setPageNumber((currentPage) => Math.min(totalPages, currentPage + 1));
+  }
+
+
 
   if (productsList?.length == 0) {
     return <div>No Products Found</div>;
@@ -109,17 +115,18 @@ const Pagination = () => {
         ))} */}
         {getPagination(pageNumber, totalPages)?.map((item, index) =>
           item === "..." ? (
-            <div key={item}>...</div>
+            <span key={`${item}-${index}`}>...</span>
           ) : (
-            <div
+            <button
+              type="button"
               key={`${item}-${index}`}
-              onClick={(e) => handleClick(item)}
+              onClick={() => goToPage(item)}
               className={
-                pageNumber == item ? "active paginated-item" : "paginated-item"
+                pageNumber === item ? "active paginated-item" : "paginated-item"
               }
             >
               {item}
-            </div>
+            </button>
           )
         )}
         <button
@@ -139,12 +146,14 @@ function getPagination(currPage, totalPages) {
     return Array.from({length: totalPages}, (_, i) => i + 1);
   } else if (currPage <= 5) {
     return [1, 2, 3, 4, 5, "...", totalPages];
-  } else if (currPage > 5 && currPage <= totalPages - 4 ){
+  } else if (currPage < totalPages - 3) {
     return [1, "...", currPage - 1, currPage, currPage + 1, "...", totalPages];
-  } else
-    return [
+  }
+
+  return [
       1,
       "...",
+      totalPages - 4,
       totalPages - 3,
       totalPages - 2,
       totalPages - 1,
