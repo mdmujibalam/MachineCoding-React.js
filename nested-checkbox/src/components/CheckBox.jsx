@@ -16,23 +16,13 @@ const CheckBox = ({ data, checked, setChecked, parentMap }) => {
         };
 
         // Update all ancestors/parents
-        //   const updateParents = (node) => {
-        //     const parentNode = parentMap.get(node.id);
-        //     if (!parentNode) return;
-        //     const allChildrenChecked = parentNode.children.every(
-        //       (child) => newChecked[child.id]
-        //     );
-        //     newChecked[parentNode.id] = allChildrenChecked;
-        //     updateParents(parentNode);
-        //   };
-
         const updateParents = (node) => {
           if (!node) return;
 
           const allChildrenChecked = node.children.every(
             (child) => newChecked[child.id],
           );
-          
+
           newChecked[node.id] = allChildrenChecked;
 
           const grandParent = parentMap.get(node.id);
