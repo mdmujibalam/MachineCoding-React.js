@@ -13,15 +13,30 @@ function useToast(delay, alignment = "top-right") {
 
     timerRef.current[id] = setTimeout(() => {
       setList((prev) => prev.filter((currItem) => currItem.id !== id));
-      delete timerRef.current[id];
+      delete timerRef.current[id];  // freeing memory for timerId to avoid memory leak
     }, delay);
   }
 
   function deleteToast(id) {
-    clearTimeout(timerRef.current[id]);
-    setList((prev) => prev.filter((currItem) => currItem.id !== id));
-    delete timerRef.current[id];
+    clearTimeout(timerRef.current[id]);//cancelling timer
+    setList((prev) => prev.filter((currItem) => currItem.id !== id)); // delete toast from list
+    delete timerRef.current[id]; // freeing memory for timerId to avoid memory leak
   }
+
+  useEffect(()=>{
+
+    return () =>{
+      // for(const timerId in timerRef.current){
+      //   clearTimeout(timerRef.current[timerId]);
+      // }
+
+      const timerIds= Object.values(timerRef.current);
+
+      timerIds.forEach((timerId)=>{
+        clearTimeout(timerId);
+      })
+    }
+  }, []);
 
   const ToastComponent = () => {
     return (
