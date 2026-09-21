@@ -1,0 +1,32 @@
+.input-box {
+  width: 300px;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.todo-item {
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.todo-img {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.todo-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.markComplete {
+  text-decoration: line-through;
+}
