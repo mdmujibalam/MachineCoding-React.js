@@ -35,5 +35,5 @@
   width: 100%;
   top: 0px;
   background-color: green;
-  transition: transform 0.5s ease;
+  transition: transform 0.5s ease 1s;
 }

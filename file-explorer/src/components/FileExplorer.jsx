@@ -11,9 +11,14 @@ const FileExplorer = ({ data, addFileOrFolder, removeFileOrFolder }) => {
   function handleFileFolderClick(isFolder, id) {
     const text = prompt("Enter Text");
 
-    if (text == "") return;
+     if (!text || !text.trim()) return;
 
-    addFileOrFolder(id, isFolder, text);
+    addFileOrFolder(id, isFolder, text.trim());
+  }
+
+  function handleRemoveClick(e, id) {
+    e.stopPropagation();
+    removeFileOrFolder(id);
   }
 
   return (
@@ -48,6 +53,14 @@ const FileExplorer = ({ data, addFileOrFolder, removeFileOrFolder }) => {
               </span>
             </span>
           )}
+
+            <span onClick={(e) => handleRemoveClick(e, node?.id)}>
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png"
+                alt="delete-icon"
+                className="icon"
+              />
+            </span>
 
           {isExpanded[node?.id] && node?.children?.length && (
             <FileExplorer

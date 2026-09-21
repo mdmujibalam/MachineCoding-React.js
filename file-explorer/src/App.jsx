@@ -35,7 +35,16 @@ function App() {
   }
 
   function removeFileOrFolder(id) {
-    function updateData(data) {}
+    function updateData(data) {
+      return data
+        ?.filter((node) => node?.id !== id)
+        .map((node) => {
+          if (node?.children?.length) {
+            return { ...node, children: updateData(node.children) };
+          }
+          return node;
+        });
+    }
 
     setFileData((prev) => updateData(prev));
   }

@@ -1,0 +1,23 @@
+.product-item {
+  border: 1px solid grey;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 5px 20px;
+}
+
+.product-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.loader {
+  text-align: center;
+}
+
+.error {
+  text-align: center;
+  color: red;
+  font-size: large;
+}
