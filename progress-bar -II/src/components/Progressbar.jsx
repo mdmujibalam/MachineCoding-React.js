@@ -4,15 +4,15 @@ const ProgressBar = () => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const timerId = setTimeout(() => {
+    const timerId = setInterval(() => {
       setProgress((prev) => Math.min(prev + 1, 100));
-    }, 100);
+    }, 500);
 
-    return () => clearTimeout(timerId);
+    return () => clearInterval(timerId);
   }, [progress]);
 
   return (
-    <div>
+    <div className="progress-wrapper">
       <div className="progressBar-container">
         <div
           className={
