@@ -1,53 +1,66 @@
 import { useState, useEffect, useRef } from "react";
 import {PAGE_SIZE, STATUS} from "../utils/data";
 
-export default function InfiniteScroll() {
+const Product = ({ product }) => {
+  return (
+    <div className="product-item">
+      <div>{product.title}</div>
+      <div>{product.description}</div>
+    </div>
+  );
+};
+
+const InfiniteScroll = () => {
   const [products, setProducts] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
-  const [status, setStatus] = useState(STATUS.LOADING);
-  const loadingRef = useRef(null);
   const [hasMore, setHasMore] = useState(true);
+  const [retryCount, setRetryCount] = useState(0);
+  const [status, setStatus] = useState(STATUS.LOADING);
+  const sentinelRef = useRef(null);
 
-  async function fetchProducts() {
-    try {
-      setStatus(STATUS.LOADING);
-      const skip = PAGE_SIZE * (pageNumber - 1);
-      const res = await fetch(
-        `https://dummyjson.com/products?limit=${PAGE_SIZE}&skip=${skip}`
-      );
-
-      const data = await res.json();
-      setProducts((prev) => [...prev, ...data.products]);
-      console.log(data.products);
-
-      if (skip + data.products.length >= data.total) {
-        setHasMore(false);
-      }
-      setStatus(null);
-    } catch (err) {
-      setStatus(STATUS.ERROR);
-      console.error("Error Occurred", err);
-    }
-  }
+  console.log("products==>", products);
 
   useEffect(() => {
-    fetchProducts();
-  }, [pageNumber]);
+    setStatus(STATUS.LOADING);
+
+    const skip = (pageNumber - 1) * PAGE_SIZE;
+    const abortController = new AbortController();
+    const { signal } = abortController;
+
+    fetch(`https://dummyjson.com/products?limit=${PAGE_SIZE}&skip=${skip}`, {
+      signal,
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error(`Error : ${res.status}`);
+
+        return res.json();
+      })
+      .then((data) => {
+        setProducts((prev) => [...prev, ...(data?.products || [])]);
+        setStatus(STATUS.IDLE);
+
+        if (skip + PAGE_SIZE >= data.total) setHasMore(false);
+      })
+      .catch((err) => {
+        if (err.name !== "AbortError") setStatus(STATUS.ERROR);
+      });
+
+    return () => abortController.abort();
+  }, [pageNumber, retryCount]);
 
   useEffect(() => {
-    const loaderElement = loadingRef.current;
+    const loaderElement = sentinelRef.current;
 
-    if (!hasMore || !loaderElement) return;
+    if (!loaderElement || !hasMore || status !== STATUS.IDLE) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        console.log(entries);
-        if (entries[0].isIntersecting && status !== STATUS.LOADING) {
+        if (entries[0].isIntersecting) {
           setPageNumber((prev) => prev + 1);
         }
       },
       {
-        threshold: 0.5,
+        threshold: 0.2,
         rootMargin: "200px",
       }
     );
@@ -55,31 +68,39 @@ export default function InfiniteScroll() {
     observer.observe(loaderElement);
 
     return () => {
-      observer.unobserve(loaderElement);
-
       observer.disconnect();
     };
-  }, [status, hasMore]);
+  }, [hasMore, status]);
 
   return (
     <div>
-      <div className="product-container">
-        {products?.map((product, index) => {
-          return (
-            <div className="product-item" key={product?.id}>
-              <div>{product.title}</div>
-              <div>{product.description}</div>
-            </div>
-          );
-        })}
+      <div className="products-container">
+        {products?.map((product, index) => (
+          <Product key={product.id} product={product} />
+        ))}
       </div>
 
-      <div className="loader" ref={loadingRef}>
-        {status === STATUS.LOADING && "Loading..."}
-        {!hasMore && "Sorry, You have reached the end"}
-      </div>
+      <div ref={sentinelRef} style={{ height: 1 }} aria-hidden="true" />
 
-      {status === STATUS.ERROR && <div className="error">Error Occurred</div>}
+      <div className="loader-container">
+        {status === STATUS.LOADING && <span>Loading...</span>}
+
+        {status === STATUS.ERROR && (
+          <span>
+            Something went wrong.{" "}
+            <button onClick={() => setRetryCount((c) => c + 1)}>Retry</button>
+          </span>
+        )}
+
+        {!hasMore &&
+          status === STATUS.IDLE &&
+          (products.length === 0
+            ? "No products found."
+            : "You've reached the end.")}
+      </div>
     </div>
   );
-}
+};
+
+export default InfiniteScroll;
+

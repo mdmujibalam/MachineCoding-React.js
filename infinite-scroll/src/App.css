@@ -1,20 +1,23 @@
 .product-item {
-  border: 1px solid grey;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding: 5px 20px;
+  width: 100%;
+  height: auto;
+  border: 1px solid black;
 }
 
-.product-container {
+.products-container {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.loader {
-  text-align: center;
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  color: green;
 }
+
 
 .error {
   text-align: center;

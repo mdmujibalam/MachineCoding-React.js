@@ -1,8 +1,8 @@
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 15;
 const STATUS = {
   LOADING: "LOADING",
   ERROR: "ERROR",
-  SUCCESS: "SUCCESS",
+  IDLE: "IDLE",
 };
 
 export { PAGE_SIZE, STATUS };
