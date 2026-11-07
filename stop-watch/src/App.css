@@ -1,0 +1,15 @@
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn {
+  cursor: pointer;
+}
+
+.time-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
