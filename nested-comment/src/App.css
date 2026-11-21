@@ -1,5 +1,7 @@
 .comment-container{
-
+  padding-left:20px;
+  display:flex;
+  flex-direction:column;
 }
 
 .comment-node{

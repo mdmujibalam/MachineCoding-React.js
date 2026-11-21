@@ -5,7 +5,6 @@ const MultiSelectDropdown = ({ options }) => {
   const [selected, setSelected] = useState([]);
   const wrapperRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const inputRef = useRef(null);
 
   //Click Outside functionality
   useEffect(() => {
@@ -22,9 +21,6 @@ const MultiSelectDropdown = ({ options }) => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   inputRef?.current?.focus();
-  // }, []);
 
   function handleAddItem(item) {
     setSelected((prev) => [...prev, item]);
@@ -36,11 +32,9 @@ const MultiSelectDropdown = ({ options }) => {
 
   //console.log(query);
 
-  const filteredOptions = options.filter(
-    (item) =>
-      item?.value?.toLowerCase()?.includes(query?.toLowerCase()) &&
-      !selected?.some((s) => s?.id === item?.id),
-  );
+  const filteredOptions = options.filter((item)=> item?.value?.toLowerCase()?.
+    includes(query?.trim()?.toLowerCase()) && !selected?.some((currItem)=> currItem?.id 
+   === item?.id));
 
   return (
     <div className="wrapper-container" ref={wrapperRef}>
@@ -55,7 +49,6 @@ const MultiSelectDropdown = ({ options }) => {
 
       <div className="input-box-container">
         <input
-          ref={inputRef}
           className="input-box"
           type="text"
           placeholder="Search here..."
